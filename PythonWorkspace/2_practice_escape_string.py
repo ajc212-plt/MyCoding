@@ -115,7 +115,7 @@ print("Red\tApple")
 # print(second)
 # print("생성된 비밀번호는 : ", second[0:3]+str(len(second))+str(second.count("e"))+"!")
 
-url = "http://naver.com"
+url = "http://naver.com" #Google, Daum 도메인 주소로 넣을 경우 다른 비번 생성
 my_str = url.replace("http://", "") #규칙1
 #print(my_str)
 my_str = my_str[:my_str.index(".")] #규칙2
