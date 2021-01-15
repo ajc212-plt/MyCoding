@@ -13,6 +13,13 @@ class Unit:
         print("{0} : {1} 방향으로 이동합니다.[속도 {2}]"\
             .format(self.name, location, self.speed))
 
+    def damaged(self, damage):
+        print("{0} : {1} 데미지를 입었습니다.".format(self.name, damage))
+        self.hp -= damage
+        print("{0} : 현재 체력은 {1} 입니다".format(self.name, self.hp))
+        if self.hp <= 0:
+            print("{0} : 파괴되었습니다.".format(self.name))        
+
 class AttackUnit(Unit): #() 상속 받을려고 하는 클래스 입력
     def __init__(self, name, hp, speed, damage):
         Unit.__init__(self, name, hp, speed) #Unit.__init__() 상속받은 클래스내의 인스턴스 사용
@@ -24,12 +31,7 @@ class AttackUnit(Unit): #() 상속 받을려고 하는 클래스 입력
             #self. 은 클래스 내에서 전달받은 값을 쓰고
             #non self는 외부에서 전달받은 값을 씀
     
-    def damaged(self, damage):
-        print("{0} : {1} 데미지를 입었습니다.".format(self.name, damage))
-        self.hp -= damage
-        print("{0} : 현재 체력은 {1} 입니다".format(self.name, self.hp))
-        if self.hp <= 0:
-            print("{0} : 파괴되었습니다.".format(self.name))
+    
 
 # 드랍쉽 : 공중 유닛, 수송기. 마린 / 파이어뱃 / 탱크 등을 수송. 공격 기능 X
 
