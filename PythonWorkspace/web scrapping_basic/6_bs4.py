@@ -20,12 +20,26 @@ soup = BeautifulSoup(res.text, "lxml")
 #print(soup.find(attrs={"class":"Nbtn_upload"})) #class="Nbtn_upload" 인 어떤 element를 찾아줘
 
 #print(soup.find("li",attrs={"class":"rank01"}))
-rank1 = soup.find("li", attrs={"class":"rank01"})
+#rank1 = soup.find("li", attrs={"class":"rank01"})
 #print(rank1.a) #rank에서 찾아온 값에서 a element만 출력
 # print(rank1.a.get_text())
 # print(rank1.next_sibling) #next_sibling 다음 형제 태그로 넘어감 rank01 -> rank02
 #next_sibling을 했는데 아무 내용이 나오지 않는다면 해당 태그들 사이에 개행이 있어서 안나올수 있다.
-rank2 = rank1.next_sibling.next_sibling #그럴땐 2번 써주면 된다.
-#rank3 = rank2.next_sibling.next_sibling
-print(rank2.a.get_text())
+# rank2 = rank1.next_sibling.next_sibling #그럴땐 2번 써주면 된다.
+# rank3 = rank2.next_sibling.next_sibling
+# print(rank3.a.get_text())
+# rank2 = rank3.previous_sibling.previous_sibling
+# print(rank2.a.get_text())
 
+#print(rank1.parent)
+# rank2 = rank1.find_next_sibling("li") # li인것만 찾음
+# print(rank2.a.get_text())
+# rank3 = rank2.find_next_sibling("li")
+# print(rank3.a.get_text())
+# rank2 = rank3.find_previous_sibling("li")
+# print(rank2.a.get_text())
+
+#print(rank1.find_next_siblings("li")) #rank1 기준으로 다음 형제들을 모두 가져옴
+
+webtoon = soup.find("a",text="바른연애 길잡이-136") #모든 정보중에서 element이름이 a이고 text가 ""안에 내용을 찾아달라는 것
+print(webtoon)
