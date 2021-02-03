@@ -1,3 +1,4 @@
+#
 import requests
 from bs4 import BeautifulSoup
 
@@ -28,3 +29,4 @@ for cartoon in cartoons:
     total_rates += float(rate)
 print("전체점수 :" , total_rates)
 print("평균점수 :" , total_rates / len(cartoons))
+
