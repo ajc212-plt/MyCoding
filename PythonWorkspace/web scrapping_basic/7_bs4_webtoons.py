@@ -15,3 +15,4 @@ cartoons = soup.find_all("a", attrs={"class":"title"})#soup 전체에서 tag명�
 for cartoon in cartoons:
     print(cartoon.get_text())
 
+print("github Saving")

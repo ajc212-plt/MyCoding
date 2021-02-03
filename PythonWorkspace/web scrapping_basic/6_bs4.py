@@ -1,5 +1,5 @@
 #beautifulsoup4
-#
+
 
 import requests
 from bs4 import BeautifulSoup
@@ -45,3 +45,4 @@ soup = BeautifulSoup(res.text, "lxml")
 webtoon = soup.find("a",text="바른연애 길잡이-136") #모든 정보중에서 element이름이 a이고 text가 ""안에 내용을 찾아달라는 것
 print(webtoon)
 
+print("github Saving")

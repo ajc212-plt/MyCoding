@@ -30,3 +30,4 @@ for cartoon in cartoons:
 print("전체점수 :" , total_rates)
 print("평균점수 :" , total_rates / len(cartoons))
 
+print("github Saving")
