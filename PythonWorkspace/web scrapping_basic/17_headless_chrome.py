@@ -1,23 +1,19 @@
-#할인된 영화 목록만 가져오기
+#headless_chrome 크롬창을 열지 않고 실행
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import requests
 import time
-browser = webdriver.Chrome()
+
+options = webdriver.ChromeOptions()
+options.headless = True
+options.add_argument("window-size=2560x1080")
+
+browser = webdriver.Chrome(options=options)
 browser.maximize_window()
 
 # 페이지 이동
 url = "https://play.google.com/store/movies/top"
 browser.get(url)
-
-
-# 지정한 위치로 스크롤 내리기
-# 모니터(해상도) 높이인 1080 위치로 스크롤 내리기
-# browser.execute_script("window.scrollTo(0, 1080)") # 2560 x 1080
-# browser.execute_script("window.scrollTo(0, 2080)") # 2560 x 1080
-
-# 화면 가장 아래로 스크롤 내리기
-# browser.execute_script("window.scrollTo(0, document.body.scrollHeight)")
 
 interval = 2 # 2초에 한번씩 스크롤 내림
 
@@ -40,7 +36,7 @@ while True:
     prev_height = curr_height #현재 문서 높이를 prev_height 에 저장 후 while문으로 다시 실행하면서 계속해서 스크롤을 내려감.
 
 print("스크롤 완료")
-
+browser.get_screenshot_as_file("google_movie.png")
 
 soup = BeautifulSoup(browser.page_source, "lxml")
 
