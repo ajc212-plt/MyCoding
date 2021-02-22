@@ -18,6 +18,7 @@
 
 import requests
 from bs4 import BeautifulSoup
+import re
 
 def create_soup(url):
     headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36"}
@@ -26,6 +27,9 @@ def create_soup(url):
     soup = BeautifulSoup(res.text,"lxml")
     return soup
 
+def print_news(index, title, link):
+    print("{}.{}".format(index+1, title))
+    print(" (링크 : {})".format(link))
 
 def scrape_weather():
     print("[오늘의 날씨]")
@@ -79,10 +83,46 @@ def scrape_headline():
     for index, news in enumerate(news_list):
         title = news.find("a").get_text().strip()
         link = url + news.find("a")["href"]
-        print("{}. {}".format(index+1, title))
-        print(" (링크 : {})".format(link))
+        print_news(index, title, link)
+    print()
+
+def scrape_it_news():
+    print("[IT 뉴스]")
+    url = "https://news.naver.com/main/list.nhn?mode=LS2D&mid=shm&sid1=105&sid2=230"
+    soup = create_soup(url)
+    news_list = soup.find("ul",attrs={"class":"type06_headline"}).find_all("li",limit=3) #3개까지
+    for index, news in enumerate(news_list):
+        a_idx=0
+        img = news.find("img")
+        if img:
+            a_idx = 1 # img 태그가 있으면 1번째 a태그의 정보를 사용
+
+        a_tag = news.find_all("a")[a_idx]
+        title = a_tag.get_text().strip()
+        link = a_tag["href"]
+        print_news(index, title, link)
+    print()
+
+def scrape_english():
+    print("[오늘의 영어 회화]")
+    url = "https://www.hackers.co.kr/?c=s_eng/eng_contents/I_others_english&keywd=haceng_submain_lnb_eng_I_others_english&logger_kw=haceng_submain_lnb_eng_I_others_english"
+    soup = create_soup(url)
+    sentences = soup.find_all("div",attrs={"id":re.compile("^conv_kor_t")}) #re.compile("^conv_kor_t") conv_kor_t로 시작하는 어떤 값을 가지는 ID의 DIV태그를 모두 가져올수 있다
+    print("[영어 지문]")
+    for sentence in sentences[len(sentences)//2:]: #8문장이 있다고 가정할 때, index 기준 4~7까지 잘라서 가져옴
+        print(sentence.get_text().strip())
+    
+    print()
+    print("[한글 지문]")
+    for sentence in sentences[:len(sentences)//2]: #8문장이 있다고 가정할 때, index 기준 0~3까지 잘라서 가져옴
+        print(sentence.get_text().strip())
+    print()
+
+    
     
     
 if __name__ == "__main__":
-    # scrape_weather()
-    scrape_headline()
+    scrape_weather() # 오늘의 날씨 정보 가져오기
+    scrape_headline() # 헤드라인 뉴스 정보 가져오기
+    scrape_it_news() # IT 뉴스 정보 가져오기
+    scrape_english() # 오늘의 영어회화 가져오기
